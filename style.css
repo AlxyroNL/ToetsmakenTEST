@@ -1,10 +1,33 @@
 body {
     font-family: Arial;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
     text-align: center;
 }
 
-button {
+.container {
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    margin: 50px auto;
+    width: 350px;
+    border-radius: 15px;
+}
+
+input {
     display: block;
-    margin: 10px auto;
+    margin: 5px auto;
+    padding: 8px;
+    width: 80%;
+    border-radius: 8px;
+    border: none;
+}
+
+button {
+    margin: 10px;
     padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #00ffcc;
+    cursor: pointer;
+    font-weight: bold;
 }
