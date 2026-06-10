@@ -1,42 +1,62 @@
-const quiz = [
-    {
-        question: "Wat zijn productiefactoren?",
-        answers: ["Arbeid, kapitaal, natuur", "Alleen geld", "Alleen machines"],
-        correct: 0
-    },
-    {
-        question: "Wat is een CAO?",
-        answers: ["Persoonlijk contract", "Afspraken voor groep werknemers", "Belastingregel"],
-        correct: 1
-    }
-];
+let quiz = [];
 
 let currentQuestion = 0;
 let score = 0;
 
+// ➕ Vraag toevoegen
+function addQuestion() {
+    const vraag = document.getElementById("vraagInput").value;
+    const a1 = document.getElementById("antwoord1").value;
+    const a2 = document.getElementById("antwoord2").value;
+    const a3 = document.getElementById("antwoord3").value;
+    const a4 = document.getElementById("antwoord4").value;
+    const correct = document.getElementById("juisteAntwoord").value - 1;
+
+    if (!vraag || !a1 || !a2 || !a3 || !a4) {
+        alert("Vul alles in!");
+        return;
+    }
+
+    quiz.push({
+        question: vraag,
+        answers: [a1, a2, a3, a4],
+        correct: correct
+    });
+
+    alert("Vraag toegevoegd!");
+}
+
+// ▶️ Start toets
+function startQuiz() {
+    if (quiz.length === 0) {
+        alert("Voeg eerst vragen toe!");
+        return;
+    }
+
+    currentQuestion = 0;
+    score = 0;
+    loadQuestion();
+}
+
+// 📥 Vraag laden
 function loadQuestion() {
     const q = quiz[currentQuestion];
 
-    document.getElementById("question").innerText = q.question;
+    let html = `<h3>${q.question}</h3>`;
 
-    const answersDiv = document.getElementById("answers");
-    answersDiv.innerHTML = "";
-
-    q.answers.forEach((answer, index) => {
-        const btn = document.createElement("button");
-        btn.innerText = answer;
-
-        btn.onclick = () => {
-            if (index === q.correct) {
-                score++;
-            }
-        };
-
-        answersDiv.appendChild(btn);
+    q.answers.forEach((ans, index) => {
+        html += `<button onclick="selectAnswer(${index})">${ans}</button>`;
     });
+
+    document.getElementById("quiz").innerHTML = html;
 }
 
-function nextQuestion() {
+// ✅ Antwoord kiezen
+function selectAnswer(index) {
+    if (index === quiz[currentQuestion].correct) {
+        score++;
+    }
+
     currentQuestion++;
 
     if (currentQuestion < quiz.length) {
@@ -46,6 +66,7 @@ function nextQuestion() {
     }
 }
 
+// 📊 Resultaat + cijfer
 function showResult() {
     const totaal = quiz.length;
 
@@ -54,13 +75,10 @@ function showResult() {
 
     const weight = document.getElementById("weight").value;
 
-    document.getElementById("quiz").style.display = "none";
-
+    document.getElementById("quiz").innerHTML = "";
     document.getElementById("result").innerHTML = `
-        ✅ Score: ${score}/${totaal} <br>
-        📊 Cijfer: ${cijfer} <br>
+        ✅ Score: ${score}/${totaal}<br>
+        📊 Cijfer: ${cijfer}<br>
         ⚖️ Gewicht: ${weight}x
     `;
 }
-
-loadQuestion();
