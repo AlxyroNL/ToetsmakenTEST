@@ -1,1 +1,10 @@
+body {
+    font-family: Arial;
+    text-align: center;
+}
 
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+}
